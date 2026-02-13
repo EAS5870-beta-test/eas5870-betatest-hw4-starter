@@ -1,0 +1,35 @@
+[project]
+name = "homework4"
+version = "0.1.0"
+description = "Homework 4"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "python-dotenv",
+    "pydantic-settings",
+    "gradio>=6.0.0",
+    "pip",
+    # Machine Translation
+    "torch",
+    "transformers~=4.51.3",
+    "sentencepiece",
+    "protobuf",
+    # Text-to-Speech
+    "numpy",
+    "kokoro>=0.9.4",
+    "torchaudio",
+    "soundfile",
+    "misaki",
+    "misaki[ja]",
+    "misaki[zh]",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cuda"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cuda" }
+torchvision = { index = "pytorch-cuda" }
+torchaudio = { index = "pytorch-cuda" }

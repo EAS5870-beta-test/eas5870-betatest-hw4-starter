@@ -1,0 +1,1 @@
+uv run python -m app.gradio.main_ui
