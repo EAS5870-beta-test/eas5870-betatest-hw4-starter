@@ -517,14 +517,19 @@ def parse_ink(ink_file_path: str) -> List[str]:
     with open(ink_file_path, 'r') as f:
         content = f.read()
 
-    # Find all shuffle blocks and extract quoted strings from lines starting with -
-    shuffle_pattern = r'\{shuffle:\s*(.*?)\}'
+    # Find all shuffle, cycle, and stopping blocks and extract quoted strings from lines starting with -
+    shuffle_pattern = r'\{\s*shuffle:\s*(.*?)\}'
+    cycle_pattern = r'\{\s*cycle:\s*(.*?)\}'
+    stopping_pattern = r'\{\s*stopping:\s*(.*?)\}'
     shuffle_blocks = re.findall(shuffle_pattern, content, re.DOTALL)
-    
+    cycle_blocks = re.findall(cycle_pattern, content, re.DOTALL)
+    stopping_blocks = re.findall(stopping_pattern, content, re.DOTALL)
+
     dialogue_lines = []
-    for block in shuffle_blocks:
+    line_pattern = r'-\s*(.+)'
+    all_blocks = [*shuffle_blocks, *cycle_blocks, *stopping_blocks]
+    for block in all_blocks:
         # Extract all quoted strings from lines starting with -
-        line_pattern = r'-\s*(.+)'
         quotes = re.findall(line_pattern, block)
         for quote in quotes:
             if quote not in dialogue_lines:
